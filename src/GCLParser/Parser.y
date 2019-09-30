@@ -120,7 +120,7 @@ PPrimitiveType :: { PrimitiveType }
 -- | Statement parsing
 
 PStatements :: { Stmt }
-             : PStatements semicolon PStatements { Seq $1 $3 }
+             : PStatement  semicolon PStatements { Seq $1 $3 }
              | PStatement                        { $1 }
 
 --PArguments :: { [Expr] }
