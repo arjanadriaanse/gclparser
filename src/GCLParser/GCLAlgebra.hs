@@ -30,6 +30,7 @@ type GCLExprAlgebra e =
      e -> e,
      BinOp -> e -> e -> e,
      String -> e -> e,
+     String -> e -> e,
      e -> e,
      e -> e -> e -> e,
      e -> e -> e -> e,
@@ -59,7 +60,7 @@ foldGCLStmt (f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12) = fStmt
       fExpr = foldGCLExpr f12
 
 foldGCLExpr :: GCLExprAlgebra e -> Expr -> e
-foldGCLExpr (f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14) = fExpr
+foldGCLExpr (f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14, f15) = fExpr
     where
       fExpr (Var a) = f1 a
       fExpr (LitI a) = f2 a
@@ -70,8 +71,9 @@ foldGCLExpr (f1, f2, f3, f4, f5, f6, f7, f8, f9, f10, f11, f12, f13, f14) = fExp
       fExpr (OpNeg a) = f7 (fExpr a)
       fExpr (BinopExpr a b c) = f8 a (fExpr b) (fExpr c)
       fExpr (Forall a b) = f9 a (fExpr b)
-      fExpr (SizeOf a) = f10 (fExpr a)
-      fExpr (RepBy a b c) = f11 (fExpr a) (fExpr b) (fExpr c)
-      fExpr (Cond a b c) = f12 (fExpr a) (fExpr b) (fExpr c)
-      fExpr (NewStore a) = f13 (fExpr a)
-      fExpr (Dereference a) = f14 a
+      fExpr (Exists a b) = f10 a (fExpr b)
+      fExpr (SizeOf a) = f11 (fExpr a)
+      fExpr (RepBy a b c) = f12 (fExpr a) (fExpr b) (fExpr c)
+      fExpr (Cond a b c) = f13 (fExpr a) (fExpr b) (fExpr c)
+      fExpr (NewStore a) = f14 (fExpr a)
+      fExpr (Dereference a) = f15 a
